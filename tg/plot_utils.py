@@ -386,18 +386,18 @@ def plot_genes_sc(
 
     fig = plt.figure(figsize=(7, len(genes) * 3.5))
     gs = GridSpec(len(genes), 2, figure=fig)
-    
-    #non visium data
+
+    # non visium data
     if 'spatial' not in adata_measured.obsm.keys():
-        #add spatial coordinates to obsm of spatial data 
-        coords = [[x,y] for x,y in zip(adata_measured.obs[x].values,adata_measured.obs[y].values)]
+        # add spatial coordinates to obsm of spatial data
+        coords = [[x, y] for x, y in zip(adata_measured.obs[x].values, adata_measured.obs[y].values)]
         adata_measured.obsm['spatial'] = np.array(coords)
-        coords = [[x,y] for x,y in zip(adata_predicted.obs[x].values,adata_predicted.obs[y].values)]
+        coords = [[x, y] for x, y in zip(adata_predicted.obs[x].values, adata_predicted.obs[y].values)]
         adata_predicted.obsm['spatial'] = np.array(coords)
 
-    if ("spatial" not in adata_measured.uns.keys()) and (spot_size==None and scale_factor==None):
+    if ("spatial" not in adata_measured.uns.keys()) and (spot_size == None and scale_factor == None):
         raise ValueError("Spot Size and Scale Factor cannot be None when ad_sp.uns['spatial'] does not exist")
-        
+
     for ix, gene in enumerate(genes):
         ax_m = fig.add_subplot(gs[ix, 0])
         sc.pl.spatial(
@@ -425,7 +425,7 @@ def plot_genes_sc(
             alpha_img=alpha_img,
             bw=bw
         )
-        
+
     #     sc.pl.spatial(adata_measured, color=['{} (measured)'.format(gene) for gene in genes], frameon=False)
     #     sc.pl.spatial(adata_predicted, color=['{} (predicted)'.format(gene) for gene in genes], frameon=False)
 
@@ -620,7 +620,7 @@ def plot_test_scores(df_gene_score, bins=10, alpha=0.7):
     """
 
     # check if df_gene_score has all required columns
-    if not set(["score", "sparsity_sc", "sparsity_sp", "sparsity_diff"]).issubset(
+    if not {"score", "sparsity_sc", "sparsity_sp", "sparsity_diff"}.issubset(
         set(df_gene_score.columns)
     ):
         raise ValueError(
@@ -690,7 +690,7 @@ def plot_auc(df_all_genes, test_genes=None):
     # place a text box in upper left in axes coords
     plt.text(0.03, 0.1, textstr, fontsize=11, verticalalignment='top', bbox=props);
 
-    
+
 # Colors used in the manuscript for deterministic assignment.
 mapping_colors = {
     "L6 CT": (0.19215686274509805, 0.5098039215686274, 0.7411764705882353),
